@@ -39,6 +39,27 @@ THREADPOOL = ThreadPoolExecutor(max_workers=1000)
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+OWNER = int(os.environ.get("OWNER",877609705))
+try: 
+    ADMINS=[877609705] 
+    for x in (os.environ.get("ADMINS", "877609705").split()):  
+        ADMINS.append(int(x)) 
+except ValueError: 
+        raise Exception("Your Admins list does not contain valid integers.") 
+ADMINS.append(OWNER)
+
+# Define the owner's user ID
+OWNER_ID = 877609705 # Replace with the actual owner's user ID
+
+# List of sudo users (initially empty or pre-populated)
+SUDO_USERS = [877609705]
+
+AUTH_CHANNEL = -1002334036141
+
+# Function to check if a user is authorized
+def is_authorized(user_id: int) -> bool:
+    return user_id == OWNER_ID or user_id in SUDO_USERS or user_id == AUTH_CHANNEL
+
 
 # Bot credentials from environment variables (Render compatible)
 API_ID = int(os.environ.get("API_ID", 23000618))
@@ -93,6 +114,42 @@ async def start(bot, message):
     quote=True,
     reply_markup=reply_markup
   )
+# Sudo command to add/remove sudo users
+@bot.on_message(filters.command("sudo"))
+async def sudo_command(bot: Client, message: Message):
+    user_id = message.chat.id
+    if user_id != OWNER_ID:
+        await message.reply_text("**🚫 You are not authorized to use this command.**")
+        return
+
+    try:
+        args = message.text.split(" ", 2)
+        if len(args) < 2:
+            await message.reply_text("**Usage:** `/sudoadd <user_id>` or `/sudoremove <user_id>`")
+            return
+
+        action = args[1].lower()
+        target_user_id = int(args[2])
+
+        if action == "add":
+            if target_user_id not in SUDO_USERS:
+                SUDO_USERS.append(target_user_id)
+                await message.reply_text(f"**✅ User {target_user_id} added to sudo list.**")
+            else:
+                await message.reply_text(f"**⚠️ User {target_user_id} is already in the sudo list.**")
+        elif action == "remove":
+            if target_user_id == OWNER_ID:
+                await message.reply_text("**🚫 The owner cannot be removed from the sudo list.**")
+            elif target_user_id in SUDO_USERS:
+                SUDO_USERS.remove(target_user_id)
+                await message.reply_text(f"**✅ User {target_user_id} removed from sudo list.**")
+            else:
+                await message.reply_text(f"**⚠️ User {target_user_id} is not in the sudo list.**")
+        else:
+            await message.reply_text("**Usage:** `/sudoadd <user_id>` or `/sudoremove <user_id>`")
+    except Exception as e:
+        await message.reply_text(f"**Error:** {str(e)}")
+
 @bot.on_message(group=2)
 #async def account_login(bot: Client, m: Message):
 #    try:
@@ -359,7 +416,7 @@ async def pwwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
     
-    auth_user = auth_users[0]
+    auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
     owner_username = "@" + user.username
 
@@ -792,11 +849,11 @@ async def cpwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
 
-    auth_user = auth_users[0]
+    auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
     owner_username = "@" + user.username
 
-    if user_id not in auth_users:
+    if user_id not in SUDO_USERS:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
         return    
             
@@ -1418,11 +1475,11 @@ async def appxwp_callback(bot, callback_query):
     user_id = callback_query.from_user.id
     await callback_query.answer()
 
-    auth_user = auth_users[0]
+    auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
     owner_username = "@" + user.username
 
-    if user_id not in auth_users:
+    if user_id not in SUDO_USERS:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
         return
         
