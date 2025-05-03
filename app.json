@@ -20,9 +20,19 @@
             "description":"Get from BotFather",
             "value":"8174804084:AAH3eNhj7cwMxHKQUkeYuFnnMDz44mdpz0U"
         },
+        "OWNER_ID": {
+            "description": "877609705",
+            "required": true
+        },
+        "SUDO_USERS": {
+            "description": "𝑺𝒖𝒅𝒐 𝑰𝑫'𝒔 (𝒀𝒐𝒖 𝑪𝒂𝒏 𝑨𝒅𝒅 𝑴𝒖𝒍𝒕𝒊𝒑𝒍𝒆 𝑩𝒚 𝑮𝒊𝒗𝒊𝒏𝒈 𝑺𝒑𝒂𝒄𝒆)",
+            "value": "877609705",
+            "required": true
+	}
+	    
         "AUTH_USERS":{
             "description":"Admin/Owner/Friends ID Seperate by ','  Ex: 44578878,8878899",
-            "value":"877609705,8105183992,1265309848"
+            "value":"877609705"
         }
     }
 
