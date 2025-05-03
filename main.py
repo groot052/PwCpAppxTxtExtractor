@@ -90,6 +90,7 @@ async def start(bot, message):
   await message.reply_photo(
     photo=random_image_url,
     caption="**PLEASE👇PRESS👇HERE**",
+    parse_mode="MARKDOWN",
     quote=True,
     reply_markup=reply_markup
   )
