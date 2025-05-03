@@ -114,6 +114,7 @@ async def start(bot, message):
     quote=True,
     reply_markup=reply_markup
   )
+    
 # Sudo command to add/remove sudo users
 @bot.on_message(filters.command("sudo"))
 async def sudo_command(bot: Client, message: Message):
@@ -149,6 +150,25 @@ async def sudo_command(bot: Client, message: Message):
             await message.reply_text("**Usage:** `/sudoadd <user_id>` or `/sudoremove <user_id>`")
     except Exception as e:
         await message.reply_text(f"**Error:** {str(e)}")
+
+@bot.on_message(filters.command("userlist") & filters.user(SUDO_USERS))
+async def list_users(client: Client, msg: Message):
+    if not SUDO_USERS:
+        return await msg.reply_text("❌ No sudo users found.")
+
+    text = "**🧑‍💻 SUDO USERS LIST:**\n\n"
+    for i, user_id in enumerate(SUDO_USERS, 1):
+        try:
+            user = await client.get_users(user_id)
+            name = f"{user.first_name} {user.last_name}" if user.last_name else user.first_name
+            username = f"@{user.username}" if user.username else "No username"
+            text += f"**{i}. {name}**\n"
+            text += f"   ├ Username: {username}\n"
+            text += f"   └ User ID: `{user.id}`\n\n"
+        except Exception as e:
+            text += f"**{i}.** Unable to fetch info for `{user_id}`\n"
+
+    await msg.reply_text(text)
 
 @bot.on_message(group=2)
 #async def account_login(bot: Client, m: Message):
