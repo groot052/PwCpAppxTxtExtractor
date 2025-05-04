@@ -52,8 +52,21 @@ ADMINS.append(OWNER)
 OWNER_ID = 877609705 # Replace with the actual owner's user ID
 
 # List of sudo users (initially empty or pre-populated)
-SUDO_USERS = [877609705]
+APP_FILE = "app.json"
 
+# Load sudo users from file
+def load_sudo_users():
+    with open(APP_FILE, "r") as f:
+        data = json.load(f)
+        return data.get("sudo_users", [])
+
+# Save sudo users to file
+def save_sudo_users(users):
+    with open(APP_FILE, "w") as f:
+        json.dump({"sudo_users": users}, f, indent=4)
+
+# Load sudo users at bot startup
+SUDO_USERS = load_sudo_users()
 AUTH_CHANNEL = -1002334036141
 
 # Function to check if a user is authorized
@@ -121,8 +134,8 @@ async def sudo_command(bot: Client, message: Message):
 
     try:
         args = message.text.split(" ", 2)
-        if len(args) < 2:
-            await message.reply_text("**Usage:** `/sudoadd <user_id>` or `/sudoremove <user_id>`")
+        if len(args) < 3:
+            await message.reply_text("**Usage:** `/sudo add <user_id>` or `/sudo remove <user_id>`")
             return
 
         action = args[1].lower()
@@ -131,6 +144,7 @@ async def sudo_command(bot: Client, message: Message):
         if action == "add":
             if target_user_id not in SUDO_USERS:
                 SUDO_USERS.append(target_user_id)
+                save_sudo_users(SUDO_USERS)  # <- file me save kar diya
                 await message.reply_text(f"**✅ User {target_user_id} added to sudo list.**")
             else:
                 await message.reply_text(f"**⚠️ User {target_user_id} is already in the sudo list.**")
@@ -139,13 +153,15 @@ async def sudo_command(bot: Client, message: Message):
                 await message.reply_text("**🚫 The owner cannot be removed from the sudo list.**")
             elif target_user_id in SUDO_USERS:
                 SUDO_USERS.remove(target_user_id)
+                save_sudo_users(SUDO_USERS)  # <- file me update kar diya
                 await message.reply_text(f"**✅ User {target_user_id} removed from sudo list.**")
             else:
                 await message.reply_text(f"**⚠️ User {target_user_id} is not in the sudo list.**")
         else:
-            await message.reply_text("**Usage:** `/sudoadd <user_id>` or `/sudoremove <user_id>`")
+            await message.reply_text("**Usage:** `/sudo add <user_id>` or `/sudo remove <user_id>`")
     except Exception as e:
         await message.reply_text(f"**Error:** {str(e)}")
+
 
 @bot.on_message(filters.command("userlist") & filters.user(SUDO_USERS))
 async def list_users(client: Client, msg: Message):
