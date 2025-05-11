@@ -1738,7 +1738,7 @@ async def process_appxwp(bot: Client, m: Message, user_id: int):
                 else:
                     formatted_time = f"{minutes} minutes {seconds} seconds"
                                     
-                caption = f"**App Name :\n <code>{selected_app_name}</code>\nBatch Name :``` \n{selected_batch_name}``````\nTime Taken : {formatted_time}```**"
+                caption = f"**App Name :```\n{selected_app_name}```\nBatch Name :``` \n{selected_batch_name}``````\nTime Taken : {formatted_time}```**"
                                 
                 files = [f"{clean_file_name}.{ext}" for ext in ["txt"]]
                 for file in files:
