@@ -52,7 +52,7 @@ ADMINS.append(OWNER)
 OWNER_ID = 877609705 # Replace with the actual owner's user ID
 
 # List of sudo users (initially empty or pre-populated)
-SUDO_USERS = [6377964950,877609705]
+SUDO_USERS = [6377964950]
 AUTH_CHANNEL = -1002334036141
 
 # Function to check if a user is authorized
