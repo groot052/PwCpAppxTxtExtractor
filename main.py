@@ -469,7 +469,7 @@ async def pwwp_callback(bot, callback_query):
     
     auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
-    owner_username = "@" + user.username
+    #owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
@@ -902,7 +902,7 @@ async def cpwp_callback(bot, callback_query):
 
     auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
-    owner_username = "@" + user.username
+    #owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
@@ -1528,7 +1528,7 @@ async def appxwp_callback(bot, callback_query):
 
     auth_user = SUDO_USERS[0]
     user = await bot.get_users(auth_user)
-    owner_username = "@" + user.username
+    #owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
         await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
