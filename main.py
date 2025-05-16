@@ -472,7 +472,7 @@ async def pwwp_callback(bot, callback_query):
     owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
-        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
+        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
         return
             
     THREADPOOL.submit(asyncio.run, process_pwwp(bot, callback_query.message, user_id))
@@ -905,7 +905,7 @@ async def cpwp_callback(bot, callback_query):
     owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
-        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
+        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
         return    
             
     THREADPOOL.submit(asyncio.run, process_cpwp(bot, callback_query.message, user_id))
@@ -1531,7 +1531,7 @@ async def appxwp_callback(bot, callback_query):
     owner_username = "@" + user.username
 
     if user_id not in SUDO_USERS:
-        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - {owner_username}**")
+        await bot.send_message(callback_query.message.chat.id, f"**You Are Not Subscribed To This Bot\nContact - @askmecourse_bot**")
         return
         
     THREADPOOL.submit(asyncio.run, process_appxwp(bot, callback_query.message, user_id))
