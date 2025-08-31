@@ -39,21 +39,21 @@ THREADPOOL = ThreadPoolExecutor(max_workers=1000)
 import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-OWNER = int(os.environ.get("OWNER",877609705))
+OWNER = int(os.environ.get("OWNER",5240924887))
 try: 
-    ADMINS=[877609705] 
-    for x in (os.environ.get("ADMINS", "877609705").split()):  
+    ADMINS=[5240924887] 
+    for x in (os.environ.get("ADMINS", "5240924887").split()):  
         ADMINS.append(int(x)) 
 except ValueError: 
         raise Exception("Your Admins list does not contain valid integers.") 
 ADMINS.append(OWNER)
 
 # Define the owner's user ID
-OWNER_ID = 877609705 # Replace with the actual owner's user ID
+OWNER_ID = 5240924887 # Replace with the actual owner's user ID
 
 # List of sudo users (initially empty or pre-populated)
-SUDO_USERS = [877609705]
-AUTH_CHANNEL = -1002334036141
+SUDO_USERS = [5240924887]
+AUTH_CHANNEL = -1001756424268
 
 # Function to check if a user is authorized
 def is_authorized(user_id: int) -> bool:
@@ -61,9 +61,9 @@ def is_authorized(user_id: int) -> bool:
 
 
 # Bot credentials from environment variables (Render compatible)
-API_ID = int(os.environ.get("API_ID", 23000618))
-API_HASH = os.environ.get("API_HASH", "da88b4f9c15b2860271e086444346a93")
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "8174804084:AAEBOn2XlqGEsvXyvsFI35w6aKTZJaqYaKY")
+API_ID = int(os.environ.get("API_ID", 20531922))
+API_HASH = os.environ.get("API_HASH", "1281c125a3e908948a9a64a58099a2f3")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "8021957130:AAE-6wO_zO9YTeYj2BUNO2LoP7p_gDlV-YI")
 
 # Initialize Bot Globally (IMPORTANT FIX)
 bot = Client("bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
